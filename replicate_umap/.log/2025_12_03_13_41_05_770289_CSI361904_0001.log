@@ -1,0 +1,157 @@
+***START RECORD***
+LEVEL: INFO
+DATETIME: 2025-12-03 13:41:05,772
+NAME: root
+PATH: /Users/bfichera/data/projects/umap_cdw/venv/lib/python3.12/site-packages/sitecustomize.py
+LINENO: 85
+MESSAGE: 
+
+Initialized python call.
+FILENAME: /Users/bfichera/data/projects/umap_cdw/normalize_twotime_contrast/make_plots.py
+COMMIT: 895ac536b3dde1823b2698b662cf5e18d6753e69
+ARGV: ['--show']
+REQUIREMENTS:
+contourpy==1.3.3    
+cycler==0.12.1    
+filelock==3.20.0    
+fonttools==4.60.1    
+fsspec==2025.10.0    
+ImageIO==2.37.2    
+imageio-ffmpeg==0.6.0    
+Jinja2==3.1.6    
+joblib==1.5.2    
+kiwisolver==1.4.9    
+llvmlite==0.45.1    
+MarkupSafe==3.0.3    
+matplotlib==3.10.7    
+mpmath==1.3.0    
+networkx==3.5    
+numba==0.62.1    
+numpy==1.26.4    
+packaging==25.0    
+pandas==2.3.3    
+pillow==12.0.0    
+pip==25.0.1    
+psutil==7.1.3    
+pynndescent==0.5.13    
+pyparsing==3.2.5    
+python-dateutil==2.9.0.post0    
+pytz==2025.2    
+scikit-learn==1.7.2    
+scipy==1.16.3    
+seaborn==0.13.2    
+six==1.17.0    
+sympy==1.14.0    
+threadpoolctl==3.6.0    
+torch==2.2.2    
+torchvision==0.17.2    
+tqdm==4.67.1    
+typing_extensions==4.15.0    
+tzdata==2025.2    
+umap-learn==0.5.9.post2    
+-e git+ssh://git@github.com/bfichera/umap_cdw.git@895ac536b3dde1823b2698b662cf5e18d6753e69#egg=umap_cdw    
+-e git+ssh://git@github.com/bfichera/UMAP_RGB.git@1e0ce6951e83c5d1fe5c6bbeb59bc21c19e81f58#egg=UMAP_RGB    
+workflowrecorder @ git+ssh://git@github.com/bfichera/workflowrecorder.git@2fe61687c3987bdc8a156fecff1d60dcd220e2f4
+FILE CONTENTS:
+from pathlib import Path
+import re
+import pickle
+import argparse
+
+import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--show', action='store_true')
+do_show = parser.parse_args().show
+if do_show:
+    show = plt.show
+else:
+
+    def show():
+        pass
+
+
+for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
+    window_length, window_stepsize_ratio = (
+        int(s) for s in
+        re.match(r'^test2_results_([0-9]*)_([0-9]*).pkl$', path.name).groups()
+    )
+    plots_folder = Path.cwd() / 'plots' / str(window_length
+                                              ) / str(window_stepsize_ratio)
+    plots_folder.mkdir(parents=True, exist_ok=True)
+    with open(path, 'rb') as fh:
+        r = pickle.load(fh)
+    plt.imshow(r.mapper_low_res_rgb[0, :, :, :])
+    plt.savefig(plots_folder / 'low_res_rgb')
+    show()
+    plt.imshow(r.mapper_rgb[0, :, :, :])
+    plt.savefig(plots_folder / 'rgb')
+    show()
+    plt.imshow(r.img_stk[0, 0, :, :])
+    plt.savefig(plots_folder / 'img_stk0')
+    show()
+    plt.imshow(r.img_stk[0, 1, :, :])
+    plt.savefig(plots_folder / 'img_stk1')
+    show()
+    plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0))
+    plt.savefig(plots_folder / 'sum_img_stk0')
+    show()
+    plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0))
+    plt.savefig(plots_folder / 'sum_img_stk1')
+    show()
+    plt.imshow(
+        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :])))
+    )
+    plt.savefig(plots_folder / 'fft_img_stk0')
+    show()
+    plt.imshow(
+        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 1, :, :])))
+    )
+    plt.savefig(plots_folder / 'fft_img_stk1')
+    show()
+
+    fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
+    u0, u1, u2, u3 = r.mapper_low_res_rgb.shape
+    collapsed_rgb = r.mapper_low_res_rgb.reshape(u1 * u2, 3)
+    ax.scatter(*(collapsed_rgb[:, i] for i in range(3)))
+    ax.set_xlabel('r')
+    ax.set_ylabel('g')
+    ax.set_zlabel('b')
+    plt.savefig(plots_folder / 'rgb_scatter')
+    show()
+    plt.close()
+
+    breakpoint()
+    std = np.std(r.window_ttcf, axis=(-1, -2))[0, :, :]
+    mean = np.mean(r.window_ttcf, axis=(-1, -2))[0, :, :]
+    plt.imshow(std / mean)
+    plt.savefig(plots_folder / 'rms_contrast')
+    show()
+    plt.close()
+
+    s0, s1, s2, s3, s4 = r.window_ttcf.shape
+    t = r.window_ttcf.reshape(s0, s1, s2, s3 * s4)
+    plt.imshow(
+        (
+            (t.max(axis=-1) - t.min(axis=-1)) /
+            (t.max(axis=-1) + t.min(axis=-1))
+        )[0, :, :]
+    )
+    plt.savefig(plots_folder / 'michelson_contrast')
+    show()
+    plt.close()
+
+***END RECORD***
+
+***START RECORD***
+LEVEL: INFO
+DATETIME: 2025-12-03 13:41:33,819
+NAME: root
+PATH: /Users/bfichera/data/projects/umap_cdw/venv/lib/python3.12/site-packages/sitecustomize.py
+LINENO: 88
+MESSAGE: 
+Exiting
+***END RECORD***
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#PBS -l walltime=7200
+#PBS -l nodes=1:ppn=32:gen8
+#PBS -A cnm83860
+
+#PBS -m ea
+
+# change into the directory where qsub will be executed
+cd $PBS_O_WORKDIR
+
+module load cuda
+module load gcc
+
+export NUMBA_NUM_THREADS=$PBS_NP
+export MKL_NUM_THREADS=$PBS_NP
+export OMP_NUM_THREADS=$PBS_NP
+
+export NUMBA_THREADING_LAYER=workqueue
+export UMAP_SKYRMION_DATA=../data
+../venv/bin/python replicate_umap.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=rms
+../venv/bin/python replicate_umap.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=michelson

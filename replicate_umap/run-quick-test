@@ -1,0 +1,7 @@
+#!/bin/bash
+export NUMBA_THREADING_LAYER=workqueue
+export UMAP_SKYRMION_DATA=../data
+export NUMBA_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+../venv/bin/python -i replicate_umap.py --quick-test --half-window-lengths 6 --window-stepsize-ratios 2
