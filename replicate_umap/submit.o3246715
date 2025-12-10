@@ -1,0 +1,300 @@
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 13456 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 13456 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:25:05 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:25:05 2025 Finding Nearest Neighbors
+Wed Dec 10 11:25:05 2025 Building RP forest with 11 trees
+Wed Dec 10 11:25:11 2025 NN descent for 14 iterations
+	 1  /  14
+	 2  /  14
+	 3  /  14
+	 4  /  14
+	 5  /  14
+	Stopping threshold met -- exiting after 5 iterations
+Wed Dec 10 11:25:24 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:25:28 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:25:39 2025 Finished embedding
+Generating color map...
+Wed Dec 10 11:25:40 2025 Worst tree score: 0.62388526
+Wed Dec 10 11:25:40 2025 Mean tree score: 0.63568128
+Wed Dec 10 11:25:40 2025 Best tree score: 0.64313317
+Wed Dec 10 11:25:43 2025 Forward diversification reduced edges from 201840 to 78372
+Wed Dec 10 11:25:46 2025 Reverse diversification reduced edges from 78372 to 78372
+Wed Dec 10 11:25:47 2025 Degree pruning reduced edges from 89014 to 88994
+Wed Dec 10 11:25:47 2025 Resorting data and graph based on tree order
+Wed Dec 10 11:25:47 2025 Building and compiling search function
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 53824 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 50000 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:26:32 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:26:32 2025 Finding Nearest Neighbors
+Wed Dec 10 11:26:32 2025 Building RP forest with 16 trees
+Wed Dec 10 11:26:36 2025 NN descent for 16 iterations
+	 1  /  16
+	 2  /  16
+	 3  /  16
+	 4  /  16
+	 5  /  16
+	Stopping threshold met -- exiting after 5 iterations
+Wed Dec 10 11:26:47 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:26:47 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:27:25 2025 Finished embedding
+Generating color map...
+Wed Dec 10 11:27:27 2025 Worst tree score: 0.55252000
+Wed Dec 10 11:27:27 2025 Mean tree score: 0.55817000
+Wed Dec 10 11:27:27 2025 Best tree score: 0.56148000
+Wed Dec 10 11:27:27 2025 Forward diversification reduced edges from 750000 to 314103
+Wed Dec 10 11:27:28 2025 Reverse diversification reduced edges from 314103 to 314103
+Wed Dec 10 11:27:28 2025 Degree pruning reduced edges from 364652 to 364314
+Wed Dec 10 11:27:28 2025 Resorting data and graph based on tree order
+Wed Dec 10 11:27:28 2025 Building and compiling search function
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 3249 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 3249 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:28:02 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:28:09 2025 Finding Nearest Neighbors
+Wed Dec 10 11:28:14 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:28:14 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:28:17 2025 Finished embedding
+Generating color map...
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 12996 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 12996 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:28:53 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:28:53 2025 Finding Nearest Neighbors
+Wed Dec 10 11:28:53 2025 Building RP forest with 11 trees
+Wed Dec 10 11:28:54 2025 NN descent for 14 iterations
+	 1  /  14
+	 2  /  14
+	 3  /  14
+	 4  /  14
+	 5  /  14
+	Stopping threshold met -- exiting after 5 iterations
+Wed Dec 10 11:28:56 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:28:56 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:29:08 2025 Finished embedding
+Generating color map...
+Wed Dec 10 11:29:08 2025 Worst tree score: 0.65281625
+Wed Dec 10 11:29:08 2025 Mean tree score: 0.66043398
+Wed Dec 10 11:29:08 2025 Best tree score: 0.66951370
+Wed Dec 10 11:29:08 2025 Forward diversification reduced edges from 194940 to 76275
+Wed Dec 10 11:29:08 2025 Reverse diversification reduced edges from 76275 to 76275
+Wed Dec 10 11:29:08 2025 Degree pruning reduced edges from 84584 to 84579
+Wed Dec 10 11:29:08 2025 Resorting data and graph based on tree order
+Wed Dec 10 11:29:08 2025 Building and compiling search function
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 784 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 784 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:29:24 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:29:25 2025 Finding Nearest Neighbors
+Wed Dec 10 11:29:25 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:29:25 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:29:26 2025 Finished embedding
+Generating color map...
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
+Calculating sliding window view (caution! may be slow...)
+Sliding window view calculation finished.
+Consolidating results...
+Using device: cpu
+Processing 3025 images in batches of 512...
+Scaling features...
+Preparing and scaling data...
+Using standard subsampling for UMAP fitting.
+Fitting UMAP on a subsample of 3025 vectors...
+Could not set Numba threads: The number of threads must be between 1 and 32
+UMAP(init='random', low_memory=False, n_components=3, n_epochs=75, n_jobs=1, random_state=42, verbose=True)
+Wed Dec 10 11:29:45 2025 Construct fuzzy simplicial set
+Wed Dec 10 11:29:51 2025 Finding Nearest Neighbors
+Wed Dec 10 11:29:52 2025 Finished Nearest Neighbor Search
+Wed Dec 10 11:29:52 2025 Construct embedding
+	completed  0  /  75 epochs
+	completed  7  /  75 epochs
+	completed  14  /  75 epochs
+	completed  21  /  75 epochs
+	completed  28  /  75 epochs
+	completed  35  /  75 epochs
+	completed  42  /  75 epochs
+	completed  49  /  75 epochs
+	completed  56  /  75 epochs
+	completed  63  /  75 epochs
+	completed  70  /  75 epochs
+Wed Dec 10 11:29:55 2025 Finished embedding
+Generating color map...
+	completed  0  /  25 epochs
+	completed  2  /  25 epochs
+	completed  4  /  25 epochs
+	completed  6  /  25 epochs
+	completed  8  /  25 epochs
+	completed  10  /  25 epochs
+	completed  12  /  25 epochs
+	completed  14  /  25 epochs
+	completed  16  /  25 epochs
+	completed  18  /  25 epochs
+	completed  20  /  25 epochs
+	completed  22  /  25 epochs
+	completed  24  /  25 epochs
+Upscaling RGB map...
