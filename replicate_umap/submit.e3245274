@@ -1,0 +1,4 @@
+usage: replicate_umap.py [-h] [--quick-test]
+                         [--half-window-lengths HALF_WINDOW_LENGTHS [HALF_WINDOW_LENGTHS ...]]
+                         [--window-stepsize-ratios WINDOW_STEPSIZE_RATIOS [WINDOW_STEPSIZE_RATIOS ...]]
+replicate_umap.py: error: unrecognized arguments: --normalizer=rms

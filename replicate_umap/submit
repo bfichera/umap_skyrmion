@@ -18,5 +18,4 @@ export OMP_NUM_THREADS=$PBS_NP
 
 export NUMBA_THREADING_LAYER=workqueue
 export UMAP_SKYRMION_DATA=../data
-../venv/bin/python replicate_umap.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=rms
-../venv/bin/python replicate_umap.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=michelson
+../venv/bin/python replicate_umap.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3

@@ -9,10 +9,8 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', action='store_true')
-parser.add_argument('--normalizer', type=str, choices=['michelson', 'rms'])
 _cfg = parser.parse_args()
 do_show = _cfg.show
-normalizer = _cfg.normalizer
 if do_show:
     show = plt.show
 else:
@@ -21,12 +19,12 @@ else:
         pass
 
 
-for path in tqdm(list((Path.cwd() / f'results_{normalizer}').glob('test2_results_*_*.pkl'))):
+for path in tqdm(list((Path.cwd() / f'results').glob('*_*.pkl'))):
     window_length, window_stepsize_ratio = (
         int(s) for s in
-        re.match(r'^test2_results_([0-9]*)_([0-9]*).pkl$', path.name).groups()
+        re.match(r'^([0-9]*)_([0-9]*).pkl$', path.name).groups()
     )
-    plots_folder = Path.cwd() / f'plots_{normalizer}' / str(window_length
+    plots_folder = Path.cwd() / f'plots' / str(window_length
                                               ) / str(window_stepsize_ratio)
     plots_folder.mkdir(parents=True, exist_ok=True)
     with open(path, 'rb') as fh:
@@ -37,27 +35,19 @@ for path in tqdm(list((Path.cwd() / f'results_{normalizer}').glob('test2_results
     plt.imshow(r.mapper_rgb[0, :, :, :])
     plt.savefig(plots_folder / 'rgb')
     show()
-    plt.imshow(r.img_stk[0, 0, :, :])
+    plt.imshow(r.img_stk[0, :, :])
     plt.savefig(plots_folder / 'img_stk0')
     show()
-    plt.imshow(r.img_stk[0, 1, :, :])
+    plt.imshow(r.img_stk[0, :, :])
     plt.savefig(plots_folder / 'img_stk1')
     show()
-    plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0))
+    plt.imshow(np.sum(r.img_stk, axis=0))
     plt.savefig(plots_folder / 'sum_img_stk0')
     show()
-    plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0))
-    plt.savefig(plots_folder / 'sum_img_stk1')
-    show()
     plt.imshow(
-        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :])))
+        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :])))
     )
     plt.savefig(plots_folder / 'fft_img_stk0')
-    show()
-    plt.imshow(
-        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 1, :, :])))
-    )
-    plt.savefig(plots_folder / 'fft_img_stk1')
     show()
 
     fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
