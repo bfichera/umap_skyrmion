@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 import pickle
 import argparse
+import shutil
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,6 +27,8 @@ for path in tqdm(list((Path.cwd() / f'results').glob('*_*.pkl'))):
     )
     plots_folder = Path.cwd() / f'plots' / str(window_length
                                               ) / str(window_stepsize_ratio)
+    if plots_folder.exists():
+        shutil.rmtree(plots_folder)
     plots_folder.mkdir(parents=True, exist_ok=True)
     with open(path, 'rb') as fh:
         r = pickle.load(fh)
@@ -38,15 +41,13 @@ for path in tqdm(list((Path.cwd() / f'results').glob('*_*.pkl'))):
     plt.imshow(r.img_stk[0, :, :])
     plt.savefig(plots_folder / 'img_stk0')
     show()
-    plt.imshow(r.img_stk[0, :, :])
-    plt.savefig(plots_folder / 'img_stk1')
-    show()
     plt.imshow(np.sum(r.img_stk, axis=0))
     plt.savefig(plots_folder / 'sum_img_stk0')
     show()
-    plt.imshow(
-        np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :])))
-    )
+    fftimg = np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :])))
+    vmin = 0.0
+    vmax = np.nanpercentile(fftimg.flatten(), 95)
+    plt.imshow(fftimg, vmin=vmin, vmax=vmax)
     plt.savefig(plots_folder / 'fft_img_stk0')
     show()
 
