@@ -6,6 +6,8 @@ import shutil
 import numpy as np
 import matplotlib.pyplot as plt
 
+cmap = 'viridis'
+
 
 def yn_input(prompt, default):
     default_str = '[y/N]'
@@ -59,7 +61,7 @@ with open(record_path, 'rb') as fh:
     frames = _normalize(img_stk[::frames_step, :, :])
     for i in range(frames.shape[0]):
         fig, ax = plt.subplots()
-        ax.imshow(frames[i],cmap='magma')
+        ax.imshow(frames[i], cmap=cmap)
         ax.axis('off')
         plt.savefig(
             output_path / f'frame_{i}.pdf',
@@ -73,7 +75,7 @@ with open(record_path, 'rb') as fh:
     for ttcf_i, ttcf_j in ttcf_idxs:
         ttcf = window_ttcf[0, ttcf_i, ttcf_j, :, :]
         fig, ax = plt.subplots()
-        ax.imshow(ttcf,origin='lower')
+        ax.imshow(ttcf, origin='lower', cmap=cmap)
         ax.axis('off')
         plt.savefig(
             output_path / f'ttcf_{ttcf_i}_{ttcf_j}.pdf',
