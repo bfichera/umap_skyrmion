@@ -1,0 +1,9 @@
+rule all:
+    params:
+        code="scripts/run.py",
+    threads:
+        32
+    output:
+        "results/output.pdf"
+    script:
+        "scripts/jobscript.sh"

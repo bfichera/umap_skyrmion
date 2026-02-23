@@ -317,6 +317,7 @@ tmp_img_array.shape
 
 # Bryan removed this
 # tmp_img_array = tmp_img_array[36:36 + 570]
+tmp_img_array = tmp_img_array[:, :128, :128]
 
 # ## Window 2-TCF
 
@@ -641,5 +642,5 @@ ax.set_title('Data with UMAP to RGB Overlay', fontsize=16)
 ax.set_xlabel('x-axis (px)', fontsize=12)
 ax.set_ylabel('y-axis (px)', fontsize=12)
 plt.grid(False)
-plt.savefig('output.pdf')
+plt.savefig('plots/output.pdf')
 plt.show()

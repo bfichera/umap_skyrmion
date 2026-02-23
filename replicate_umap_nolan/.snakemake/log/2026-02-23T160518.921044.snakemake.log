@@ -1,0 +1,2 @@
+SyntaxError in file /home/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/Snakefile, line 4:
+Unexpected keyword scripts in rule definition (Snakefile, line 4)

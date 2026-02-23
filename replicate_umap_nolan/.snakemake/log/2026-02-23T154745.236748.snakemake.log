@@ -1,0 +1,22 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 50
+Job stats:
+job      count
+-----  -------
+all          1
+total        1
+
+Select jobs to execute...
+
+[Mon Feb 23 15:47:45 2026]
+rule all:
+    output: output.pdf
+    jobid: 0
+    reason: Missing output files: output.pdf
+    threads: 32
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>
+
+WorkflowError:
+Error formatting custom jobscript scripts/jobscript.sh: value for 'threads' not found.
+Make sure that your custom jobscript is defined as expected.
