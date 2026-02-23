@@ -28,6 +28,7 @@ import torchvision.transforms.functional as F
 
 # Imaging / Plotting
 
+import tifffile
 from PIL import Image  # Pillow library for image manipulation
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -291,8 +292,8 @@ def extract_images_to_numpy_array(directory_path):
 # This was the previous filepath. Is this really the data that Nolan analyzed?
 # image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
 # Bryan changed it to this:
-image_array = extract_images_to_numpy_array(
-    "/Users/bfichera/nolandata/Skyrmion_Time_Series_data"
+image_array = tifffile.imread(
+    '/Users/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/data/Skyrmion_Time_Series_Data/Skyrmion_Time_Series_300G_15sframe-RawImages.tif'
 )
 
 # ### LTEM Sim
