@@ -293,7 +293,7 @@ def extract_images_to_numpy_array(directory_path):
 # image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
 # Bryan changed it to this:
 image_array = tifffile.imread(
-    '/Users/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/data/Skyrmion_Time_Series_Data/Skyrmion_Time_Series_300G_15sframe-RawImages.tif'
+    '../data/Skyrmion_Time_Series_300G_15sframe.tif'
 )
 
 # ### LTEM Sim
@@ -317,6 +317,7 @@ tmp_img_array.shape
 
 # Bryan removed this
 # tmp_img_array = tmp_img_array[36:36 + 570]
+tmp_img_array = tmp_img_array[:,:128,:128]
 
 # ## Window 2-TCF
 
@@ -422,7 +423,8 @@ for i, j, tt_data in tqdm(results):
 
 # TODO
 # Not sure what this is for....
-window_ttcf = window_ttcf[:, :, 920:, 920:]
+# Bryan removed this for our fast test
+# window_ttcf = window_ttcf[:, :, 920:, 920:]
 
 # In[31]:
 
@@ -640,4 +642,5 @@ ax.set_title('Data with UMAP to RGB Overlay', fontsize=16)
 ax.set_xlabel('x-axis (px)', fontsize=12)
 ax.set_ylabel('y-axis (px)', fontsize=12)
 plt.grid(False)
+plt.savefig('output.pdf')
 plt.show()
