@@ -315,7 +315,8 @@ tmp_img_array.shape
 
 # In[ ]:
 
-tmp_img_array = tmp_img_array[36:36 + 570]
+# Bryan removed this
+# tmp_img_array = tmp_img_array[36:36 + 570]
 
 # ## Window 2-TCF
 
@@ -331,15 +332,18 @@ def window(arr, x, y, size):
                           // 2, 0):np.minimum(y + size // 2, arr.shape[2])]
 
 
-rand_arr = np.random.randint(0, 32, (64, 32, 32))
-print(np.std(rand_arr[:, 18:22, 26:30] - window(rand_arr, 20, 28, 4)))
-window(rand_arr, 4, 4, 8).shape
+# Bryan removed this too
+# rand_arr = np.random.randint(0, 32, (64, 32, 32))
+# print(np.std(rand_arr[:, 18:22, 26:30] - window(rand_arr, 20, 28, 4)))
+# window(rand_arr, 4, 4, 8).shape
 
 # In[50]:
 # expecting a T x M x N array, where T is time axis, (M,N) are picture
 # dimensions
 data_source = tmp_img_array
 n_frames = data_source.shape[0]
+# TODO
+# Check this is the right window size??
 window_size = 50
 window_step_size = 3
 
@@ -367,28 +371,9 @@ window_ttcf = np.zeros(
     (window_coords[0].shape[0], window_coords[0].shape[1], n_frames, n_frames)
 )
 
-# In[51]:
-
-window_ttcf.shape
-
 # ### Windowed autocorrelation
 # Calculates autocorrelation 2-TCF for each window so that they can be
 # classified on a pointwise basis
-
-# In[57]:
-"""
-for i in tqdm(range(window_coords[0].shape[0])):
-    for j in range(window_coords[0].shape[1]):
-        target_window = window(data_source, \
-                               window_coords[0][i][j], \
-                               window_coords[1][i][j], \
-                               window_size)
-        #print(target_window.shape)
-        waterfall = wfl(target_window)
-        #print(waterfall.shape)
-        tt = calc_autocorrelation(waterfall)
-        window_ttcf[i,j,:,:] = tt
-"""
 
 
 def add_to_window_ttcf(pair):
@@ -435,6 +420,8 @@ for i, j, tt_data in tqdm(results):
 
 # In[33]:
 
+# TODO
+# Not sure what this is for....
 window_ttcf = window_ttcf[:, :, 920:, 920:]
 
 # In[31]:
