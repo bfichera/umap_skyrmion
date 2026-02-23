@@ -109,11 +109,6 @@ def normalize(data: np.array):
     return (data - np.min(data)) / (np.max(data) - np.min(data))
 
 
-# In[54]:
-
-# In[55]:
-
-
 def wfl(x):
     return x.reshape((x.shape[0], -1))
 
@@ -292,7 +287,13 @@ def extract_images_to_numpy_array(directory_path):
         return None
 
 
-image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
+# TODO
+# This was the previous filepath. Is this really the data that Nolan analyzed?
+# image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
+# Bryan changed it to this:
+image_array = extract_images_to_numpy_array(
+    "/Users/bfichera/nolandata/Skyrmion_Time_Series_data"
+)
 
 # ### LTEM Sim
 
