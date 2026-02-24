@@ -293,7 +293,7 @@ def extract_images_to_numpy_array(directory_path):
 # image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
 # Bryan changed it to this:
 image_array = tifffile.imread(
-    '../data/Skyrmion_Time_Series_300G_15sframe.tif'
+    '../../data/Skyrmion_Time_Series_300G_15sframe.tif'
 )
 
 # ### LTEM Sim
@@ -642,5 +642,5 @@ ax.set_title('Data with UMAP to RGB Overlay', fontsize=16)
 ax.set_xlabel('x-axis (px)', fontsize=12)
 ax.set_ylabel('y-axis (px)', fontsize=12)
 plt.grid(False)
-plt.savefig('plots/output.pdf')
+plt.savefig('../results/output.pdf')
 plt.show()

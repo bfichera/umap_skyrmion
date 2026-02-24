@@ -7,7 +7,7 @@
 #PBS -m ea
 
 # change into the directory where qsub will be executed
-cd $PBS_O_WORKDIR
+cd $PBS_O_WORKDIR/workflow
 
 module load cuda
 module load gcc

@@ -5,5 +5,5 @@ rule all:
         32
     output:
         "results/output.pdf"
-    script:
-        "scripts/jobscript.sh"
+    shell:
+        "envs/venv/bin/python scripts/run.py"

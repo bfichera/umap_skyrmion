@@ -1,0 +1,4 @@
+executor: cluster-generic
+jobs: 1
+cluster-generic-submit-cmd: "qsub -A cnm83860"
+default-resources: []
