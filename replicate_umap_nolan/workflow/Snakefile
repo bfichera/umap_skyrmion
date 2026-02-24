@@ -3,6 +3,8 @@ rule all:
         "scripts/run.py"
     threads:
         32
+    resources:
+        runtime: 10
     output:
         "results/output.pdf"
     shell:

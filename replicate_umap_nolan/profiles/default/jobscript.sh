@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #PBS -A cnm83860
-#PBS -l walltime={resources.walltime}
-#PBS -l nodes=1:ppn={threads}:{resources.arch}
+#PBS -l walltime={resources.runtime}
+#PBS -l nodes=1:ppn={threads}:gen8
 #PBS -m ea
 
 # change into the directory where qsub will be executed
