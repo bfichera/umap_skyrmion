@@ -1,11 +1,10 @@
 rule all:
     input:
-        "scripts/run.py"
-    threads:
-        32
-    resources:
-        runtime: 10
+        "workflow/scripts/run.py"
     output:
         "results/output.pdf"
+    threads: 32
+    resources:
+        runtime=3
     shell:
-        "envs/venv/bin/python scripts/run.py"
+        "workflow/envs/venv/bin/python {input}"

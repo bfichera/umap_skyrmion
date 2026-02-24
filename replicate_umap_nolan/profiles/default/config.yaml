@@ -1,4 +1,3 @@
 executor: cluster-generic
 jobs: 1
-cluster-generic-submit-cmd: "qsub"
-default-resources: []
+cluster-generic-submit-cmd: "qsub -A cnm83860 -l walltime={resources.runtime},nodes=1:ppn={threads}:gen8 -m ea "
