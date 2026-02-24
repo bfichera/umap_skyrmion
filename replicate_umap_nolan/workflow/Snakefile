@@ -1,6 +1,6 @@
 rule all:
-    params:
-        code="scripts/run.py",
+    input:
+        "scripts/run.py"
     threads:
         32
     output:
