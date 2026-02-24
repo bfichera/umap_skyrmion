@@ -317,7 +317,7 @@ tmp_img_array.shape
 
 # Bryan removed this
 # tmp_img_array = tmp_img_array[36:36 + 570]
-tmp_img_array = tmp_img_array[:, :128, :128]
+# tmp_img_array = tmp_img_array[:, :128, :128]
 
 # ## Window 2-TCF
 

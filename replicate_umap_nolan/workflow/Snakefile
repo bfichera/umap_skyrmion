@@ -5,6 +5,6 @@ rule all:
         "results/output.pdf"
     threads: 32
     resources:
-        runtime=3
+        runtime=14400
     shell:
         "workflow/envs/venv/bin/python {input}"
