@@ -342,11 +342,15 @@ def window(arr, x, y, size):
 # expecting a T x M x N array, where T is time axis, (M,N) are picture
 # dimensions
 data_source = tmp_img_array
+print(f'data shape: {data_source.shape}')
 n_frames = data_source.shape[0]
 # TODO
 # Check this is the right window size??
+# window_size = 50
+# window_step_size = 3
+# Bryan changed window size and window step size here because it was gonna take forever
 window_size = 50
-window_step_size = 3
+window_step_size = 50
 
 
 def cartesian_product(*arrays):
