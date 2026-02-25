@@ -1,3 +1,0 @@
-NameError in file /home/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/Snakefile, line 7:
-name 'cnm83860' is not defined
-  File "/home/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/Snakefile", line 7, in <module>

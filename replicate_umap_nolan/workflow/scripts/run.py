@@ -1,4 +1,16 @@
 #!/usr/bin/env python
+
+# Added by Bryan
+# Parse command-line arguments
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--window-size', type=int, default=16)
+parser.add_argument('--window-step-size', type=int, default=16)
+_cfg = parser.parse_args()
+window_size = _cfg.window_size
+window_step_size = _cfg.window_step_size
+
+
 # coding: utf-8
 
 # ## Imports
@@ -342,15 +354,12 @@ def window(arr, x, y, size):
 # expecting a T x M x N array, where T is time axis, (M,N) are picture
 # dimensions
 data_source = tmp_img_array
-print(f'data shape: {data_source.shape}')
 n_frames = data_source.shape[0]
 # TODO
 # Check this is the right window size??
+# Bryan commented out window_size and window_step_size in lieu of command line parsing (see above)
 # window_size = 50
 # window_step_size = 3
-# Bryan changed window size and window step size here because it was gonna take forever
-window_size = 50
-window_step_size = 50
 
 
 def cartesian_product(*arrays):

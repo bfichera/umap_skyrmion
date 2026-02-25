@@ -1,91 +1,0 @@
-host: n564
-Building DAG of jobs...
-Using shell: /bin/bash
-Provided cores: 32
-Rules claiming more threads will be scaled down.
-Select jobs to execute...
-Execute 1 jobs...
-
-[Wed Feb 25 10:45:13 2026]
-localrule all:
-    input: workflow/scripts/run.py
-    output: results/output.pdf
-    jobid: 0
-    reason: Forced execution
-    threads: 32
-    resources: tmpdir=/tmp/3646171.sched5.carboncluster, disk_mb=1000, disk=1 GB, disk_mib=954, mem_mb=1000, mem=1 GB, mem_mib=954, runtime=14400
-Processing 2-TCF:   0%|          | 0/1369 [00:00<?, ?it/s]Processing 2-TCF:   2%|▏         | 32/1369 [00:01<00:44, 29.98it/s]Processing 2-TCF:   4%|▎         | 48/1369 [00:01<00:33, 38.98it/s]Processing 2-TCF:   5%|▍         | 64/1369 [00:01<00:27, 48.28it/s]Processing 2-TCF:   6%|▌         | 80/1369 [00:01<00:22, 56.61it/s]Processing 2-TCF:   7%|▋         | 96/1369 [00:01<00:22, 57.30it/s]Processing 2-TCF:   8%|▊         | 112/1369 [00:02<00:21, 59.18it/s]Processing 2-TCF:   9%|▉         | 128/1369 [00:02<00:22, 55.13it/s]Processing 2-TCF:  11%|█         | 144/1369 [00:02<00:20, 59.25it/s]Processing 2-TCF:  12%|█▏        | 160/1369 [00:03<00:20, 60.23it/s]Processing 2-TCF:  13%|█▎        | 176/1369 [00:03<00:19, 61.46it/s]Processing 2-TCF:  14%|█▍        | 192/1369 [00:03<00:17, 68.71it/s]Processing 2-TCF:  15%|█▌        | 208/1369 [00:03<00:18, 63.57it/s]Processing 2-TCF:  16%|█▋        | 224/1369 [00:03<00:16, 68.06it/s]Processing 2-TCF:  18%|█▊        | 240/1369 [00:04<00:16, 68.44it/s]Processing 2-TCF:  19%|█▊        | 256/1369 [00:04<00:17, 63.10it/s]Processing 2-TCF:  20%|█▉        | 272/1369 [00:04<00:16, 67.88it/s]Processing 2-TCF:  21%|██        | 288/1369 [00:04<00:16, 66.36it/s]Processing 2-TCF:  22%|██▏       | 304/1369 [00:05<00:15, 68.21it/s]Processing 2-TCF:  23%|██▎       | 320/1369 [00:05<00:16, 63.87it/s]Processing 2-TCF:  25%|██▍       | 336/1369 [00:05<00:15, 67.81it/s]Processing 2-TCF:  26%|██▌       | 352/1369 [00:05<00:14, 70.30it/s]Processing 2-TCF:  27%|██▋       | 368/1369 [00:06<00:13, 73.69it/s]Processing 2-TCF:  28%|██▊       | 384/1369 [00:06<00:13, 72.09it/s]Processing 2-TCF:  29%|██▉       | 400/1369 [00:06<00:12, 75.05it/s]Processing 2-TCF:  30%|███       | 416/1369 [00:06<00:12, 77.59it/s]Processing 2-TCF:  32%|███▏      | 432/1369 [00:06<00:12, 74.20it/s]Processing 2-TCF:  33%|███▎      | 448/1369 [00:07<00:12, 74.64it/s]Processing 2-TCF:  34%|███▍      | 464/1369 [00:07<00:11, 76.35it/s]Processing 2-TCF:  35%|███▌      | 480/1369 [00:07<00:11, 76.34it/s]Processing 2-TCF:  36%|███▌      | 496/1369 [00:07<00:11, 78.54it/s]Processing 2-TCF:  37%|███▋      | 512/1369 [00:07<00:10, 80.66it/s]Processing 2-TCF:  39%|███▊      | 528/1369 [00:08<00:10, 82.08it/s]Processing 2-TCF:  40%|███▉      | 544/1369 [00:08<00:10, 78.64it/s]Processing 2-TCF:  41%|████      | 560/1369 [00:08<00:10, 80.06it/s]Processing 2-TCF:  42%|████▏     | 576/1369 [00:08<00:09, 79.79it/s]Processing 2-TCF:  43%|████▎     | 592/1369 [00:08<00:10, 77.16it/s]Processing 2-TCF:  44%|████▍     | 608/1369 [00:09<00:10, 73.07it/s]Processing 2-TCF:  46%|████▌     | 624/1369 [00:09<00:09, 78.24it/s]Processing 2-TCF:  47%|████▋     | 640/1369 [00:09<00:08, 81.25it/s]Processing 2-TCF:  48%|████▊     | 656/1369 [00:09<00:08, 79.80it/s]Processing 2-TCF:  49%|████▉     | 672/1369 [00:09<00:08, 82.41it/s]Processing 2-TCF:  50%|█████     | 688/1369 [00:10<00:08, 84.28it/s]Processing 2-TCF:  51%|█████▏    | 704/1369 [00:10<00:08, 81.89it/s]Processing 2-TCF:  53%|█████▎    | 720/1369 [00:10<00:07, 84.89it/s]Processing 2-TCF:  54%|█████▍    | 736/1369 [00:10<00:07, 80.80it/s]Processing 2-TCF:  55%|█████▍    | 752/1369 [00:10<00:07, 78.15it/s]Processing 2-TCF:  56%|█████▌    | 768/1369 [00:11<00:07, 77.25it/s]Processing 2-TCF:  57%|█████▋    | 784/1369 [00:11<00:07, 80.90it/s]Processing 2-TCF:  58%|█████▊    | 800/1369 [00:11<00:06, 86.12it/s]Processing 2-TCF:  60%|█████▉    | 816/1369 [00:11<00:06, 84.36it/s]Processing 2-TCF:  61%|██████    | 832/1369 [00:11<00:06, 77.34it/s]Processing 2-TCF:  62%|██████▏   | 848/1369 [00:12<00:06, 78.45it/s]Processing 2-TCF:  63%|██████▎   | 864/1369 [00:12<00:06, 82.15it/s]Processing 2-TCF:  64%|██████▍   | 880/1369 [00:12<00:06, 78.21it/s]Processing 2-TCF:  65%|██████▌   | 896/1369 [00:12<00:05, 79.86it/s]Processing 2-TCF:  67%|██████▋   | 912/1369 [00:12<00:05, 79.39it/s]Processing 2-TCF:  68%|██████▊   | 928/1369 [00:13<00:05, 75.57it/s]Processing 2-TCF:  69%|██████▉   | 944/1369 [00:13<00:05, 75.73it/s]Processing 2-TCF:  70%|███████   | 960/1369 [00:13<00:05, 78.21it/s]Processing 2-TCF:  71%|███████▏  | 976/1369 [00:13<00:05, 76.04it/s]Processing 2-TCF:  72%|███████▏  | 992/1369 [00:13<00:04, 80.09it/s]Processing 2-TCF:  74%|███████▎  | 1008/1369 [00:14<00:04, 81.62it/s]Processing 2-TCF:  75%|███████▍  | 1024/1369 [00:14<00:04, 80.51it/s]Processing 2-TCF:  76%|███████▌  | 1040/1369 [00:14<00:04, 79.44it/s]Processing 2-TCF:  77%|███████▋  | 1056/1369 [00:14<00:03, 79.49it/s]Processing 2-TCF:  78%|███████▊  | 1072/1369 [00:14<00:03, 78.48it/s]Processing 2-TCF:  79%|███████▉  | 1088/1369 [00:15<00:03, 77.51it/s]Processing 2-TCF:  81%|████████  | 1104/1369 [00:15<00:03, 81.75it/s]Processing 2-TCF:  82%|████████▏ | 1120/1369 [00:15<00:03, 78.06it/s]Processing 2-TCF:  83%|████████▎ | 1136/1369 [00:15<00:02, 78.25it/s]Processing 2-TCF:  84%|████████▍ | 1152/1369 [00:15<00:02, 80.33it/s]Processing 2-TCF:  85%|████████▌ | 1168/1369 [00:16<00:02, 78.47it/s]Processing 2-TCF:  86%|████████▋ | 1184/1369 [00:16<00:02, 77.95it/s]Processing 2-TCF:  88%|████████▊ | 1200/1369 [00:16<00:02, 75.35it/s]Processing 2-TCF:  89%|████████▉ | 1216/1369 [00:16<00:01, 78.83it/s]Processing 2-TCF:  90%|████████▉ | 1232/1369 [00:16<00:01, 79.89it/s]Processing 2-TCF:  91%|█████████ | 1248/1369 [00:17<00:01, 77.48it/s]Processing 2-TCF:  92%|█████████▏| 1264/1369 [00:17<00:01, 81.36it/s]Processing 2-TCF:  93%|█████████▎| 1280/1369 [00:17<00:01, 77.74it/s]Processing 2-TCF:  95%|█████████▍| 1296/1369 [00:17<00:00, 79.65it/s]Processing 2-TCF:  96%|█████████▌| 1312/1369 [00:17<00:00, 84.06it/s]Processing 2-TCF:  97%|█████████▋| 1328/1369 [00:18<00:00, 79.59it/s]Processing 2-TCF:  98%|█████████▊| 1344/1369 [00:18<00:00, 80.56it/s]Processing 2-TCF:  99%|█████████▉| 1360/1369 [00:18<00:00, 83.44it/s]Processing 2-TCF: 100%|██████████| 1369/1369 [00:18<00:00, 73.92it/s]
-  0%|          | 0/1369 [00:00<?, ?it/s]100%|██████████| 1369/1369 [00:00<00:00, 56659.09it/s]
-/home/bfichera/data/projects/umap_skyrmion/replicate_umap_nolan/workflow/envs/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-  0%|          | 0/1369 [00:00<?, ?it/s]100%|██████████| 1369/1369 [00:00<00:00, 39682.39it/s]
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-findfont: Generic family 'sans-serif' not found because none of the following families were found: Arial
-[Wed Feb 25 10:46:58 2026]
-Finished jobid: 0 (Rule: all)
-1 of 1 steps (100%) done
-Storing output in storage.

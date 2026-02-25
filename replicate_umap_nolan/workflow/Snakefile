@@ -1,10 +1,21 @@
-rule all:
+WINDOW_SIZES = [50, 100, 150, 200, 250, 300]
+WINDOW_STEP_SIZES = [50]
+
+rule all_window_sets:
     input:
-        "workflow/scripts/run.py"
+        expand(
+            "results/{window_size}/{window_step_size}/output.pdf",
+            window_size=WINDOW_SIZES,
+            window_step_size=WINDOW_STEP_SIZES
+        )
+
+rule window_set:
+    input:
+        script="workflow/scripts/run.py"
     output:
-        "results/output.pdf"
+        "results/{window_size}/{window_step_size}/output.pdf"
     threads: 32
     resources:
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input}"
+        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
