@@ -464,6 +464,8 @@ model.classifier = torch.nn.Identity()
 A, B, C, D = window_ttcf.shape
 num_items = A * B
 reshaped_array = window_ttcf.reshape(num_items, C, D)
+# Bryan added this del line
+del window_ttcf
 
 img_size = weights.transforms().crop_size  # Typically [224] for B0
 norm_mean = weights.transforms().mean  # e.g., [0.485, 0.456, 0.406]
