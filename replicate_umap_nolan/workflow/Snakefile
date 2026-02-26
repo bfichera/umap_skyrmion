@@ -2,6 +2,10 @@ WINDOW_SIZES = [100]
 # WINDOW_STEP_SIZES = [5, 10, 20, 30, 40, 50]
 WINDOW_STEP_SIZES = [40]
 
+wildcard_constraints:
+    window_size=r"\d+",
+    window_step_size=r"\d+"
+
 rule all_window_sets:
     input:
         expand(
@@ -23,19 +27,27 @@ rule window_set:
     shell:
         "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
 
+rule all_broken_window_sets:
+    input:
+        expand(
+            "results/broken/{window_size}/{window_step_size}/output.pdf",
+            window_size=WINDOW_SIZES,
+            window_step_size=WINDOW_STEP_SIZES
+        )
+
 rule broken_window_set_umap:
     input:
         script="workflow/scripts/make_umap.py",
         fv="temp/{window_size}/{window_step_size}/feature_vecs.npy"
     output:
-        "results/{window_size}/{window_step_size}/output.pdf"
+        "results/broken/{window_size}/{window_step_size}/output.pdf"
     threads: 32
     resources:
         nodes=1,
         mem_str="1gb",
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv}"
+        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
 
 rule broken_window_set_fv:
     input:
@@ -48,4 +60,4 @@ rule broken_window_set_fv:
         mem_str="1gb",
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size{windcards.window_step_size} --output-file {output}"
+        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"

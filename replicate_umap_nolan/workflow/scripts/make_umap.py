@@ -7,11 +7,13 @@ from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument('--window-size', type=int, default=16)
 parser.add_argument('--window-step-size', type=int, default=16)
-parser.add_argument('--feature-vecs', typ=lambda s: Path(s))
+parser.add_argument('--feature-vecs-path', type=lambda s: Path(s))
+parser.add_argument('--output-file', type=lambda s: Path(s))
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
-feature_vecs_path = _cfg.feature_vecs
+feature_vecs_path = _cfg.feature_vecs_path
+output_file = _cfg.output_file
 
 
 # coding: utf-8
@@ -302,6 +304,77 @@ def extract_images_to_numpy_array(directory_path):
         print(f"An unexpected error occurred: {e}")
         return None
 
+# TODO
+# This was the previous filepath. Is this really the data that Nolan analyzed?
+# image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
+# Bryan changed it to this:
+image_array = tifffile.imread(
+    '../data/Skyrmion_Time_Series_300G_15sframe.tif'
+)
+
+# ### LTEM Sim
+
+# ### Sim Post-Processing
+
+# You may need to reshape the data
+
+# In[ ]:
+
+N = 256
+M = 48
+
+tmp_img_array = image_array
+del image_array
+for i in range(len(tmp_img_array)):
+    tmp_img_array[i] = tmp_img_array[i] / np.mean(tmp_img_array[i])
+tmp_img_array.shape
+
+# In[ ]:
+
+# Bryan removed this
+# tmp_img_array = tmp_img_array[36:36 + 570]
+# tmp_img_array = tmp_img_array[:, :128, :128]
+
+# ## Window 2-TCF
+
+# In[49]:
+
+
+# window to grab parts of an array
+def window(arr, x, y, size):
+    return arr[:,
+               np.maximum(x - size
+                          // 2, 0):np.minimum(x + size // 2, arr.shape[1]),
+               np.maximum(y - size
+                          // 2, 0):np.minimum(y + size // 2, arr.shape[2])]
+
+
+# Bryan removed this too
+# rand_arr = np.random.randint(0, 32, (64, 32, 32))
+# print(np.std(rand_arr[:, 18:22, 26:30] - window(rand_arr, 20, 28, 4)))
+# window(rand_arr, 4, 4, 8).shape
+
+# In[50]:
+# expecting a T x M x N array, where T is time axis, (M,N) are picture
+# dimensions
+data_source = tmp_img_array
+n_frames = data_source.shape[0]
+# TODO
+# Check this is the right window size??
+# Bryan commented out window_size and window_step_size in lieu of command line parsing (see above)
+# window_size = 50
+# window_step_size = 3
+
+
+def cartesian_product(*arrays):
+    la = len(arrays)
+    dtype = np.result_type(*arrays)
+    arr = np.empty([len(a) for a in arrays] + [la], dtype=dtype)
+    for i, a in enumerate(np.ix_(*arrays)):
+        arr[..., i] = a
+    return arr.reshape(-1, la)
+
+
 
 
 
@@ -443,5 +516,5 @@ ax.set_title('Data with UMAP to RGB Overlay', fontsize=16)
 ax.set_xlabel('x-axis (px)', fontsize=12)
 ax.set_ylabel('y-axis (px)', fontsize=12)
 plt.grid(False)
-plt.savefig(f'results/{window_size}/{window_step_size}/output.pdf')
+plt.savefig(output_file)
 plt.show()
