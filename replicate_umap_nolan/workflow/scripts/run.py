@@ -495,6 +495,8 @@ def preprocess_numpy_batch(np_batch):
 
 
 net_input = torch.tensor(reshaped_array)
+# Bryan added this del line
+del reshaped_array
 net_input = net_input.unsqueeze(1)
 net_input = torch.tile(net_input, (1, 3, 1, 1)).type(torch.float32)
 
@@ -550,6 +552,8 @@ mapper = umap.UMAP(
     n_components=3, n_neighbors=15, min_dist=0.1, random_state=42
 )
 umap_embedding = mapper.fit_transform(scaled_feature_vecs)
+# Bryan added this
+del scaled_feature_vecs
 
 # --- 4. MAP UMAP COORDINATES TO EXPLICIT RGB COLORS ---
 print("Mapping UMAP coordinates to 3-channel RGB colors...")

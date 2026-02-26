@@ -16,6 +16,8 @@ rule window_set:
         "results/{window_size}/{window_step_size}/output.pdf"
     threads: 32
     resources:
+        nodes=4,
+        mem_str="4tb",
         runtime=14400
     shell:
         "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
