@@ -1,6 +1,5 @@
-WINDOW_SIZES = [100]
-# WINDOW_STEP_SIZES = [5, 10, 20, 30, 40, 50]
-WINDOW_STEP_SIZES = [40]
+WINDOW_SIZES = [75]
+WINDOW_STEP_SIZES = [5, 10, 20, 30, 40, 50]
 
 wildcard_constraints:
     window_size=r"\d+",
@@ -41,10 +40,10 @@ rule broken_window_set_umap:
         fv="temp/{window_size}/{window_step_size}/feature_vecs.npy"
     output:
         "results/broken/{window_size}/{window_step_size}/output.pdf"
-    threads: 32
+    threads: 16
     resources:
         nodes=1,
-        mem_str="1gb",
+        mem_str="200gb",
         runtime=14400
     shell:
         "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
