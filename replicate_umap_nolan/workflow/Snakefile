@@ -1,5 +1,5 @@
 WINDOW_SIZES = [75]
-WINDOW_STEP_SIZES = [5, 10, 20, 30, 40, 50]
+WINDOW_STEP_SIZES = [5]
 
 wildcard_constraints:
     window_size=r"\d+",
@@ -24,7 +24,7 @@ rule window_set:
         mem_str="1gb",
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
+        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
 
 rule all_broken_window_sets:
     input:
@@ -46,17 +46,17 @@ rule broken_window_set_umap:
         mem_str="200gb",
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
+        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
 
 rule broken_window_set_fv:
     input:
         script="workflow/scripts/make_feature_vecs.py"
     output:
-        "temp/{window_size}/{window_step_size}/feature_vecs.npy"
+        protected("temp/{window_size}/{window_step_size}/feature_vecs.npy")
     threads: 32
     resources:
         nodes=1,
         mem_str="1gb",
         runtime=14400
     shell:
-        "workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"
+        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"

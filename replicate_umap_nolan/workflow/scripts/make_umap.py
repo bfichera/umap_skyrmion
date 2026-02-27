@@ -4,6 +4,9 @@
 # Parse command-line arguments
 import argparse
 from pathlib import Path
+import psutil
+import os
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--window-size', type=int, default=16)
 parser.add_argument('--window-step-size', type=int, default=16)
@@ -14,6 +17,18 @@ window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
 feature_vecs_path = _cfg.feature_vecs_path
 output_file = _cfg.output_file
+
+# Added by Bryan
+# Diagnose memory usage
+def mem(label=""):
+    with open("/proc/self/status") as f:
+        lines = f.readlines()
+    vals = {}
+    for l in lines:
+        if l.startswith(("VmRSS", "VmHWM", "VmSize", "VmPeak")):
+            k, v = l.split(":")
+            vals[k] = v.strip()
+    print(f"[PROC] {label}:", vals)
 
 
 # coding: utf-8
@@ -55,7 +70,8 @@ import os
 from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 
-os.environ["OMP_NUM_THREADS"] = "64"
+# Bryan commented this out
+# os.environ["OMP_NUM_THREADS"] = "64"
 
 mpl.rcParams['figure.dpi'] = 200
 
@@ -308,9 +324,11 @@ def extract_images_to_numpy_array(directory_path):
 # This was the previous filepath. Is this really the data that Nolan analyzed?
 # image_array = extract_images_to_numpy_array(r"Skyrmion_Time_Series_Data")
 # Bryan changed it to this:
+mem('before image_array')
 image_array = tifffile.imread(
     '../data/Skyrmion_Time_Series_300G_15sframe.tif'
 )
+mem('after image_array')
 
 # ### LTEM Sim
 
@@ -328,6 +346,7 @@ del image_array
 for i in range(len(tmp_img_array)):
     tmp_img_array[i] = tmp_img_array[i] / np.mean(tmp_img_array[i])
 tmp_img_array.shape
+mem('after tmp_image_array')
 
 # In[ ]:
 
@@ -378,6 +397,7 @@ def cartesian_product(*arrays):
 
 
 
+mem('before window coords')
 window_coords = np.meshgrid(
     np.arange(
         window_size // 2 + 1, data_source.shape[1] - window_size // 2 - 1,
@@ -388,22 +408,28 @@ window_coords = np.meshgrid(
         window_step_size
     )
 )
+mem('after window coords')
+mem('before import vecs')
 with open(feature_vecs_path, 'rb') as fh:
     scaled_feature_vecs = np.load(fh)
+mem('after import vecs')
 
 # --- 1. DEFINE YOUR PARAMETERS ---
 # The side length of each square box in data units
 sidelength = window_step_size
 box_transparency = 0.875  # The alpha value for the boxes
 
+mem('before original coords')
 grid_x, grid_y = window_coords
 original_coords = np.vstack([grid_x.ravel(), grid_y.ravel()]).T
+mem('after original coords')
 
 # Create dummy high-dimensional data
 np.random.seed(42)
 
 # --- 3. THE ANALYSIS PIPELINE (SCALE AND REDUCE) ---
 
+mem('before umap')
 # Run UMAP to get the 2D embedding
 mapper = umap.UMAP(
     n_components=3, n_neighbors=15, min_dist=0.1, random_state=42
@@ -411,6 +437,7 @@ mapper = umap.UMAP(
 umap_embedding = mapper.fit_transform(scaled_feature_vecs)
 # Bryan added this
 del scaled_feature_vecs
+mem('after umap')
 
 # --- 4. MAP UMAP COORDINATES TO EXPLICIT RGB COLORS ---
 print("Mapping UMAP coordinates to 3-channel RGB colors...")
@@ -427,29 +454,35 @@ def norm_dim(idx):
 
 # Create an (N, 3) array where N is the number of points.
 # Each row is a specific (Red, Green, Blue) triplet.
+mem('before umap colors')
 rgb_colors = np.zeros((len(original_coords), 3))
 rgb_colors[:, 0] = norm_dim(1)  # Map UMAP Dimension 1 to the Red channel
 rgb_colors[:, 1] = norm_dim(2)  # Map UMAP Dimension 2 to the Green channel
 rgb_colors[:, 2] = norm_dim(3)
+mem('after umap colors')
 
 # --- 5. CREATE A LIST OF RECTANGLE PATCHES ---
 print("Creating rectangle patches...")
 patches = []
 # Assuming 'original_coords' are the bottom-left corners of the boxes
+mem('before rectangles')
 for coord in tqdm(original_coords):
     rect = Rectangle((coord[1], coord[0]), sidelength, sidelength)
     patches.append(rect)
+mem('after rectangles')
 
 # --- 6. CREATE AND ADD THE PATCH COLLECTION ---
 print("Creating and adding patch collection to plot...")
 # When using explicit RGB colors, we pass them to the 'facecolor' argument.
 # We do NOT use 'cmap' or 'set_array'.
+mem('before collection')
 collection = PatchCollection(
     patches,
     alpha=box_transparency,
     facecolor=rgb_colors,  # Use the explicit (N, 3) color array
     edgecolor='none'  # Turn off box edges for a smoother look
 )
+mem('after collection')
 
 # --- 7. CREATE THE PLOT ---
 fig, ax = plt.subplots(figsize=(6, 5))
@@ -461,53 +494,11 @@ ax.imshow(background, extent=[0, img_width, 0, img_height])
 ax.add_collection(collection)
 
 # ADD ROI
-
-
-def get_clustered_indices(colors, m):
-    """
-    Finds the indices of M closely clustered colors from an Nx3 RGB array.
-
-    Args:
-        colors (np.ndarray): An Nx3 NumPy array of RGB colors.
-        m (int): The number of colors/indices to sample.
-
-    Returns:
-        np.ndarray: An array of M indices corresponding to the most
-                    clustered colors in the original 'colors' array.
-    """
-    if m > len(colors):
-        raise ValueError("M cannot be larger than the number of colors N.")
-
-    # Calculate the pairwise Euclidean distances between all colors
-    pairwise_distances = np.linalg.norm(
-        colors[:, np.newaxis, :] - colors[np.newaxis, :, :], axis=2
-    )
-
-    # Find the index of the color with the minimum average distance to all
-    # others. This color serves as the cluster's "medoid" or center.
-    avg_distances = np.mean(pairwise_distances, axis=1)
-    center_index = np.argmin(avg_distances)
-
-    # Get the distances from this center color to all other colors
-    distances_from_center = pairwise_distances[center_index]
-
-    # Find the indices of the M closest colors
-    closest_indices = np.argsort(distances_from_center)[:m]
-
-    return closest_indices
-
-
-# Get the indices of the M most clustered colors
-clustered_indices = get_clustered_indices(rgb_colors, 12)
-
-# Use these indices to retrieve the original 2D coordinates
-sampled_coords = original_coords[clustered_indices]
-
-# You can also get the actual color values if needed for verification
-sampled_colors = rgb_colors[clustered_indices]
+mem('after collection')
 
 # Set plot limits and aspect ratio
 # ax.autoscale_view()
+mem('before plotting')
 ax.set_xlim([0, background.shape[1]])
 ax.set_ylim([0, background.shape[0]])
 ax.set_aspect('equal')
@@ -517,4 +508,4 @@ ax.set_xlabel('x-axis (px)', fontsize=12)
 ax.set_ylabel('y-axis (px)', fontsize=12)
 plt.grid(False)
 plt.savefig(output_file)
-plt.show()
+mem('after plotting')
