@@ -1,5 +1,5 @@
-WINDOW_SIZES = [75]
-WINDOW_STEP_SIZES = [5]
+WINDOW_SIZES = [50,60,70]
+WINDOW_STEP_SIZES = [2,3,5]
 
 wildcard_constraints:
     window_size=r"\d+",
@@ -13,37 +13,16 @@ rule all_window_sets:
             window_step_size=WINDOW_STEP_SIZES
         )
 
-rule window_set:
-    input:
-        script="workflow/scripts/run.py"
-    output:
-        "results/{window_size}/{window_step_size}/output.pdf"
-    threads: 32
-    resources:
-        nodes=1,
-        mem_str="1gb",
-        runtime=14400
-    shell:
-        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size}"
-
-rule all_broken_window_sets:
-    input:
-        expand(
-            "results/broken/{window_size}/{window_step_size}/output.pdf",
-            window_size=WINDOW_SIZES,
-            window_step_size=WINDOW_STEP_SIZES
-        )
-
 rule broken_window_set_umap:
     input:
         script="workflow/scripts/make_umap.py",
-        fv="temp/{window_size}/{window_step_size}/feature_vecs.npy"
+        fv="feature_vectors/{window_size}/{window_step_size}/feature_vecs.npy"
     output:
-        "results/broken/{window_size}/{window_step_size}/output.pdf"
+        "results/{window_size}/{window_step_size}/output.pdf"
     threads: 16
     resources:
         nodes=1,
-        mem_str="200gb",
+        mem_str="256gb",
         runtime=14400
     shell:
         "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
@@ -52,11 +31,11 @@ rule broken_window_set_fv:
     input:
         script="workflow/scripts/make_feature_vecs.py"
     output:
-        protected("temp/{window_size}/{window_step_size}/feature_vecs.npy")
+        protected("feature_vectors/{window_size}/{window_step_size}/feature_vecs.npy")
     threads: 32
     resources:
         nodes=1,
-        mem_str="1gb",
+        mem_str="512gb",
         runtime=14400
     shell:
         "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"

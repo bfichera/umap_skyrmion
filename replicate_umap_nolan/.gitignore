@@ -1,3 +1,4 @@
 snakejob.*
 .snakemake/
+feature_vectors/
 temp/
