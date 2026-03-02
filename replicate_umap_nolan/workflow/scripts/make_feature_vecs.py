@@ -89,7 +89,10 @@ def autocorr(waterfall, n_proc=8, verbose=0):
     # TODO
     # Note, change to specify CORRECT AXES OVER WHICH TO MEAN - should be
     # vector which outer product gives array, no?
-    variance_squared = np.mean(np.square(waterfall)) - np.mean(waterfall)**2
+    # variance_squared = np.mean(np.square(waterfall)) - np.mean(waterfall)**2
+    # Bryan removed the above line and added the below lines:
+    denom_t = np.sqrt(np.mean(np.square(waterfall),axis=1) - np.square(np.mean(waterfall, axis=1)))
+    variance_squared = np.outer(denom_t, denom_t)
 
     n_frames = waterfall.shape[0]
 
