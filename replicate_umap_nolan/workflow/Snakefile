@@ -23,7 +23,7 @@ rule broken_window_set_umap:
     resources:
         nodes=1,
         mem_str="256gb",
-        runtime=14400
+        runtime=28800
     shell:
         "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output}"
 
@@ -36,6 +36,6 @@ rule broken_window_set_fv:
     resources:
         nodes=1,
         mem_str="512gb",
-        runtime=14400
+        runtime=28800
     shell:
         "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"
