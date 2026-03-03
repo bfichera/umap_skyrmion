@@ -2,21 +2,25 @@
 
 # Added by Bryan
 # Parse command-line arguments
+# Add PCA support
 import argparse
 from pathlib import Path
 import psutil
 import os
+from sklearn.decomposition import PCA as skPCA
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--window-size', type=int, default=16)
 parser.add_argument('--window-step-size', type=int, default=16)
 parser.add_argument('--feature-vecs-path', type=lambda s: Path(s))
 parser.add_argument('--output-file', type=lambda s: Path(s))
+parser.add_argument('--mapper', type=str, choices=['umap', 'pca'], default='umap')
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
 feature_vecs_path = _cfg.feature_vecs_path
 output_file = _cfg.output_file
+mapper_str = _cfg.mapper
 
 # Added by Bryan
 # Diagnose memory usage
@@ -431,10 +435,16 @@ np.random.seed(42)
 
 mem('before umap')
 # Run UMAP to get the 2D embedding
-mapper = umap.UMAP(
-    n_components=3, n_neighbors=15, min_dist=0.1, random_state=42
-)
-umap_embedding = mapper.fit_transform(scaled_feature_vecs)
+# Bryan added the umap / pca choice and the pca
+if mapper_str == 'umap':
+    mapper = umap.UMAP(
+        n_components=3, n_neighbors=15, min_dist=0.1, random_state=42
+    )
+    umap_embedding = mapper.fit_transform(scaled_feature_vecs)
+elif mapper_str == 'pca':
+    mapper = skPCA(n_components=3)
+    mapper.fit(scaled_feature_vecs)
+    umap_embedding = mapper.transform(scaled_feature_vecs)
 # Bryan added this
 del scaled_feature_vecs
 mem('after umap')
