@@ -15,12 +15,16 @@ parser.add_argument('--window-step-size', type=int, default=16)
 parser.add_argument('--feature-vecs-path', type=lambda s: Path(s))
 parser.add_argument('--output-file', type=lambda s: Path(s))
 parser.add_argument('--mapper', type=str, choices=['umap', 'pca'], default='umap')
+parser.add_argument('--neighbors', type=int, default=15)
+parser.add_argument('--min-dist', type=float, default=0.1)
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
 feature_vecs_path = _cfg.feature_vecs_path
 output_file = _cfg.output_file
 mapper_str = _cfg.mapper
+n_neighbors = _cfg.neighbors
+min_dist = _cfg.min_dist
 
 # Added by Bryan
 # Diagnose memory usage
@@ -438,7 +442,7 @@ mem('before umap')
 # Bryan added the umap / pca choice and the pca
 if mapper_str == 'umap':
     mapper = umap.UMAP(
-        n_components=3, n_neighbors=15, min_dist=0.1, random_state=42
+        n_components=3, n_neighbors=n_neighbors, min_dist=min_dist, random_state=42
     )
     umap_embedding = mapper.fit_transform(scaled_feature_vecs)
 elif mapper_str == 'pca':
