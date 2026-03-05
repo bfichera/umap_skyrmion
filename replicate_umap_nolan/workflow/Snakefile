@@ -1,7 +1,7 @@
 WINDOW_SIZES = [60]
-WINDOW_STEP_SIZES = [4]
+WINDOW_STEP_SIZES = [2, 3]
 MAPPERS = ["umap"]
-N_NEIGHBORS = [2, 5, 10, 15, 20, 25, 30, 50, 100]
+N_NEIGHBORS = [3, 5, 10, 15, 20, 25, 30, 50, 100]
 MIN_DIST = [0.01, 0.03, 0.1, 0.02, 0.3, 0.5, 0.7, 0.9]
 
 wildcard_constraints:
