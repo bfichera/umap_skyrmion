@@ -1,8 +1,11 @@
 WINDOW_SIZES = [62]
 WINDOW_STEP_SIZES = [10]
 MAPPERS = ["umap"]
-N_NEIGHBORS = [3, 5, 10, 15, 20, 25, 30, 50, 100]
-MIN_DIST = [0.01, 0.03, 0.1, 0.02, 0.3, 0.5, 0.7, 0.9]
+N_NEIGHBORS = [15]
+MIN_DIST = [0.1]
+INCLUDE_PROBABLY_WRONG_CODE = [0, 1]
+NO_NORMALIZE = [0, 1]
+
 
 wildcard_constraints:
     window_size=r"\d+",
@@ -11,37 +14,39 @@ wildcard_constraints:
 rule all_window_sets:
     input:
         expand(
-            "results/{mapper}/n_neighbors_{n_neighbors}/min_dist_{min_dist}/{window_size}/{window_step_size}/output.pdf",
+            "results/{mapper}/ipwc_{ipwc}/no_normalize_{no_normalize}/n_neighbors_{n_neighbors}/min_dist_{min_dist}/{window_size}/{window_step_size}/output.pdf",
             window_size=WINDOW_SIZES,
             window_step_size=WINDOW_STEP_SIZES,
             mapper=MAPPERS,
             n_neighbors=N_NEIGHBORS,
             min_dist=MIN_DIST,
+            ipwc=INCLUDE_PROBABLY_WRONG_CODE,
+            no_normalize=NO_NORMALIZE,
         )
 
 rule broken_window_set_umap:
     input:
         script="workflow/scripts/make_umap.py",
-        fv="feature_vectors/{window_size}/{window_step_size}/feature_vecs.npy"
+        fv="feature_vectors/ipwc_{ipwc}/no_normalize_{no_normalize}/{window_size}/{window_step_size}/feature_vecs.npy"
     output:
-        "results/{mapper}/n_neighbors_{n_neighbors}/min_dist_{min_dist}/{window_size}/{window_step_size}/output.pdf"
+        "results/{mapper}/ipwc_{ipwc}/no_normalize_{no_normalize}/n_neighbors_{n_neighbors}/min_dist_{min_dist}/{window_size}/{window_step_size}/output.pdf"
     threads: 16
     resources:
         nodes=1,
         mem_str="256gb",
         runtime=28800
     shell:
-        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output} --mapper {wildcards.mapper} --neighbors {wildcards.n_neighbors} --min-dist {wildcards.min_dist}"
+        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --feature-vecs-path {input.fv} --output-file {output} --mapper {wildcards.mapper} --neighbors {wildcards.n_neighbors} --min-dist {wildcards.min_dist} --include-probably-wrong-code {wildcards.ipwc} --no-normalize {wildcards.no_normalize}"
 
 rule broken_window_set_fv:
     input:
         script="workflow/scripts/make_feature_vecs.py"
     output:
-        protected("feature_vectors/{window_size}/{window_step_size}/feature_vecs.npy")
+        protected("feature_vectors/ipwc_{ipwc}/no_normalize_{no_normalize}/{window_size}/{window_step_size}/feature_vecs.npy")
     threads: 32
     resources:
         nodes=1,
         mem_str="512gb",
         runtime=28800
     shell:
-        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output}"
+        "OMP_NUM_THREADS={threads} workflow/envs/venv/bin/python {input.script} --window-size {wildcards.window_size} --window-step-size {wildcards.window_step_size} --output-file {output} --include-probably-wrong-code {wildcards.ipwc} --no-normalize {wildcards.no_normalize}"

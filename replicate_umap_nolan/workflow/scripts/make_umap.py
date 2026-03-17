@@ -17,6 +17,8 @@ parser.add_argument('--output-file', type=lambda s: Path(s))
 parser.add_argument('--mapper', type=str, choices=['umap', 'pca'], default='umap')
 parser.add_argument('--neighbors', type=int, default=15)
 parser.add_argument('--min-dist', type=float, default=0.1)
+parser.add_argument('--include-probably-wrong-code', type=int, default=0)
+parser.add_argument('--no-normalize', type=int, default=0)
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
@@ -25,6 +27,8 @@ output_file = _cfg.output_file
 mapper_str = _cfg.mapper
 n_neighbors = _cfg.neighbors
 min_dist = _cfg.min_dist
+include_probably_wrong_code = bool(_cfg.include_probably_wrong_code)
+do_normalize = not bool(_cfg.no_normalize)
 
 # Added by Bryan
 # Diagnose memory usage
@@ -351,16 +355,18 @@ M = 48
 
 tmp_img_array = image_array
 del image_array
-for i in range(len(tmp_img_array)):
-    tmp_img_array[i] = tmp_img_array[i] / np.mean(tmp_img_array[i])
+if do_normalize:
+    for i in range(len(tmp_img_array)):
+        tmp_img_array[i] = tmp_img_array[i] / np.mean(tmp_img_array[i])
 tmp_img_array.shape
 mem('after tmp_image_array')
 
 # In[ ]:
 
-# Bryan removed this
-# tmp_img_array = tmp_img_array[36:36 + 570]
-# tmp_img_array = tmp_img_array[:, :128, :128]
+if include_probably_wrong_code:
+    # Bryan removed this
+    tmp_img_array = tmp_img_array[36:36 + 570]
+    # tmp_img_array = tmp_img_array[:, :128, :128]
 
 # ## Window 2-TCF
 
