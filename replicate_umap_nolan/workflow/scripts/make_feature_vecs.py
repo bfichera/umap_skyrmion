@@ -10,12 +10,14 @@ parser.add_argument('--window-step-size', type=int, default=16)
 parser.add_argument('--output-file', type=lambda s: Path(s))
 parser.add_argument('--include-probably-wrong-code', type=int, default=0)
 parser.add_argument('--no-normalize', type=int, default=0)
+parser.add_argument('--preprocess', type=int, default=0)
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
 output_path = _cfg.output_file
 include_probably_wrong_code = bool(_cfg.include_probably_wrong_code)
 do_normalize = not bool(_cfg.no_normalize)
+do_preprocess = bool(_cfg.preprocess)
 
 
 # coding: utf-8
@@ -507,12 +509,16 @@ def preprocess_numpy_batch(np_batch):
 
     return torch.stack(processed_tensors, dim=0)
 
+if do_preprocess:
+    net_input = preprocess_numpy_batch(reshaped_array)
+    del reshaped_array
+else:
+    net_input = torch.tensor(reshaped_array)
+    del reshaped_array
+    net_input = net_input.unsqueeze(1)
+    net_input = torch.tile(net_input, (1, 3, 1, 1)).type(torch.float32)
 
-net_input = torch.tensor(reshaped_array)
 # Bryan added this del line
-del reshaped_array
-net_input = net_input.unsqueeze(1)
-net_input = torch.tile(net_input, (1, 3, 1, 1)).type(torch.float32)
 
 # In[64]:
 
