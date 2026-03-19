@@ -19,6 +19,7 @@ parser.add_argument('--neighbors', type=int, default=15)
 parser.add_argument('--min-dist', type=float, default=0.1)
 parser.add_argument('--include-probably-wrong-code', type=int, default=0)
 parser.add_argument('--no-normalize', type=int, default=0)
+parser.add_argument('--no-normalize-rgb', type=int, default=0)
 _cfg = parser.parse_args()
 window_size = _cfg.window_size
 window_step_size = _cfg.window_step_size
@@ -29,6 +30,7 @@ n_neighbors = _cfg.neighbors
 min_dist = _cfg.min_dist
 include_probably_wrong_code = bool(_cfg.include_probably_wrong_code)
 do_normalize = not bool(_cfg.no_normalize)
+do_normalize_rgb = not bool(_cfg.no_normalize_rgb)
 
 # Added by Bryan
 # Diagnose memory usage
@@ -468,8 +470,14 @@ def norm(val):
     return (val - val.min()) / (val.max() - val.min())
 
 
-def norm_dim(idx):
-    return norm(umap_embedding[:, idx - 1])
+if do_normalize_rgb:
+
+    def norm_dim(idx):
+        return norm(umap_embedding[:, idx - 1])
+
+else:
+    def norm_dim(idx):
+        return norm(umap_embedding)[:, idx-1]
 
 
 # Create an (N, 3) array where N is the number of points.
