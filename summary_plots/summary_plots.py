@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 cmap = 'viridis'
+ttcf_cmap = 'magma'
 
 
 def yn_input(prompt, default):
@@ -75,7 +76,7 @@ with open(record_path, 'rb') as fh:
     for ttcf_i, ttcf_j in ttcf_idxs:
         ttcf = window_ttcf[0, ttcf_i, ttcf_j, :, :]
         fig, ax = plt.subplots()
-        ax.imshow(ttcf, origin='lower', cmap=cmap)
+        ax.imshow(ttcf, origin='lower', cmap=ttcf_cmap)
         ax.axis('off')
         plt.savefig(
             output_path / f'ttcf_{ttcf_i}_{ttcf_j}.pdf',
