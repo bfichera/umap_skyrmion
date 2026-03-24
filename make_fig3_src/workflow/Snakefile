@@ -1,0 +1,52 @@
+WINDOW_SIZES = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 120, 140]
+WINDOW_STEP_SIZES = [10]
+TTCFS_I = [0]
+TTCFS_J = [0]
+
+
+
+wildcard_constraints:
+    window_size=r"\d+",
+    window_step_size=r"\d+"
+
+rule all:
+    input:
+        expand(
+            "plots/window_length_{window_size}/window_stepsize_{window_step_size}",
+            window_size=WINDOW_SIZES,
+            window_step_size=WINDOW_STEP_SIZES,
+        )
+
+rule make_plots:
+    input:
+        script="workflow/scripts/make_plots.py",
+        results="results/{window_size}/{window_step_size}/results.pkl"
+    output:
+        directory("plots/window_length_{window_size}/window_stepsize_{window_step_size}")
+    threads: 1
+    resources:
+        nodes=1,
+        mem_str=16,
+        runtime=600,
+    shell:
+        "mkdir -p {output} && workflow/envs/venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf --ttcfs_i {TTCFS_I} --ttcfs_j {TTCFS_J}"
+
+rule single:
+    input:
+        script="workflow/scripts/replicate_umap.py",
+        data="../data"
+    output:
+        protected("results/{window_size}/{window_step_size}/results.pkl")
+    threads: 16
+    resources:
+        nodes=1,
+        mem_str="256gb",
+        runtime=28800
+    shell:
+        "module load cuda; module load gcc; \
+         NUMBA_NUM_THREADS={threads} \
+         MKL_NUM_THREADS={threads} \
+         OMP_NUM_THREADS={threads} \
+         NUMBA_THREADING_LAYER=workqueue \
+         UMAP_SKYRMION_DATA={input.data} \
+         workflow/envs/venv/bin/python {input.script} --window-length {wildcards.window_size} --window-stepsize {wildcards.window_step_size} --recorder-path {output}"
