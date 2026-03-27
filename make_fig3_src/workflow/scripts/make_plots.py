@@ -41,11 +41,11 @@ else:
 plots_folder = _cfg.output_dir
 with open(results_path, 'rb') as fh:
     r = pickle.load(fh)
-plt.imshow(r.mapper_low_res_rgb[0, :, :, :], cmap=data_cmap)
+plt.imshow(r.mapper_low_res_rgb[0, :, :, :], cmap=data_cmap, origin='lower')
 plt.axis('off')
 plt.savefig(plots_folder / f'low_res_rgb{extension}', **kwargs)
 show()
-plt.imshow(r.mapper_rgb[0, :, :, :], cmap=data_cmap)
+plt.imshow(r.mapper_rgb[0, :, :, :], cmap=data_cmap, origin='lower')
 plt.axis('off')
 plt.savefig(plots_folder / f'rgb{extension}', **kwargs)
 show()
@@ -65,7 +65,7 @@ for frame in frames_of_interest:
 params['img_stk_0_vmin'] = cdw_vmin_0
 params['img_stk_0_vmax'] = cdw_vmax_0
 for frame in frames_of_interest:
-    mappable_0 = plt.imshow(r.img_stk[frame, :, :], cmap=data_cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
+    mappable_0 = plt.imshow(r.img_stk[frame, :, :], cmap=data_cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0, origin='lower')
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
     show()
@@ -97,7 +97,7 @@ for ttcf_i, ttcf_j in ttcf_idxs:
     ttcf_i_idx = int(ttcf_i * n_i)
     ttcf_j_idx = int(ttcf_j * n_j)
     ttcf = r.window_ttcf[0, ttcf_i_idx, ttcf_j_idx, :, :]
-    mappable = plt.imshow(ttcf, origin='lower', cmap=ttcf_cmap, vmin=ttcf_vmin, vmax=ttcf_vmax)
+    mappable = plt.imshow(ttcf, cmap=ttcf_cmap, vmin=ttcf_vmin, vmax=ttcf_vmax, origin='lower')
     plt.axis('off')
     plt.savefig(plots_folder / f'ttcf_{ttcf_i_idx}_{ttcf_j_idx}{extension}', **kwargs)
 fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
@@ -107,7 +107,7 @@ plt.savefig(plots_folder / 'ttcf_colorbar.pdf', **kwargs)
 plt.close()
 
 im = np.sum(r.img_stk[:, :, :], axis=0)
-mappable = plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
+mappable = plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im), origin='lower')
 params['sum_img_stk_0_vmin'] = np.amin(im)
 params['sum_img_stk_0_vmax'] = np.amax(im)
 plt.axis('off')
@@ -121,6 +121,7 @@ plt.close()
 plt.imshow(
     np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :]))),
     cmap=cmap,
+    origin='lower',
 )
 plt.savefig(plots_folder / f'fft_img_stk0{extension}')
 show()
@@ -139,7 +140,8 @@ plt.close()
 s0, s1, s2, s3, s4 = r.window_ttcf.shape
 plt.imshow(
     np.std(r.window_ttcf.reshape(s0, s1, s2, s3 * s4), axis=-1)[0, :, :],
-    cmap=cmap,
+    cmap=cmap, 
+    origin='lower',
 )
 plt.savefig(plots_folder / f'rms_contrast{extension}')
 show()
@@ -152,6 +154,7 @@ plt.imshow(
         (t.max(axis=-1) + t.min(axis=-1))
     )[0, :, :],
     cmap=cmap,
+    origin='lower',
 )
 plt.savefig(plots_folder / f'michelson_contrast{extension}')
 show()
