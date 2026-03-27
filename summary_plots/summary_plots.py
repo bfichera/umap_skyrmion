@@ -62,7 +62,7 @@ with open(record_path, 'rb') as fh:
     frames = _normalize(img_stk[::frames_step, :, :])
     for i in range(frames.shape[0]):
         fig, ax = plt.subplots()
-        ax.imshow(frames[i], cmap=cmap)
+        ax.imshow(frames[i], cmap=cmap, origin='lower')
         ax.axis('off')
         plt.savefig(
             output_path / f'frame_{i}.pdf',
@@ -88,7 +88,7 @@ with open(record_path, 'rb') as fh:
 
     mapper_get_rgb_0 = record.mapper_get_rgb_0
     fig, ax = plt.subplots()
-    ax.imshow(mapper_get_rgb_0)
+    ax.imshow(mapper_get_rgb_0, origin='lower')
     ax.axis('off')
     plt.savefig(
         output_path / 'mapper_get_rgb_0.pdf',
