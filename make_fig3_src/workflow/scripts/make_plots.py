@@ -51,7 +51,7 @@ plt.savefig(plots_folder / f'rgb{extension}', **kwargs)
 show()
 
 num_frames = r.img_stk.shape[0]
-frames_of_interest = np.linspace(0, num_frames, 10, endpoint=False, dtype=int)
+frames_of_interest = np.linspace(0, num_frames-1, 10, endpoint=True, dtype=int)
 cdw_vmin_0 = np.inf
 cdw_vmax_0 = -np.inf
 cdw_vmin_1 = np.inf
