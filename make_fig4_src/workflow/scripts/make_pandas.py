@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--results-path', type=lambda s: Path(s))
 parser.add_argument('--output-path', type=lambda s: Path(s))
 _cfg = parser.parse_args()
-output_path = _cfg.output_path
+\utput_path = _cfg.output_path
 results_path = _cfg.results_path
 
 rows = []
@@ -36,11 +36,11 @@ for trial_d in results_path.glob('trial_*'):
                         'frames_fraction': frames_fraction,
                         'window_size': window_size,
                         'window_step_size': window_step_size,
-                        'num_frames': r.img_stk.shape[0],
-                        'size_x': r.img_stk.shape[1],
-                        'size_y': r.img_stk.shape[2],
-                        'num_windows_x': r.window_ttcf.shape[2],
-                        'num_windows_y': r.window_ttcf.shape[3],
+                        'num_frames': r.img_stk_shape[0],
+                        'size_x': r.img_stk_shape[1],
+                        'size_y': r.img_stk_shape[2],
+                        'num_windows_x': r.window_ttcf_shape[2],
+                        'num_windows_y': r.window_ttcf_shape[3],
                         'total_time': r.end_time - r.start_time,
                         'generate_rgb_time': r.post_rgb_time - r.pre_rgb_time,
                         'window_ttcf_time': r.post_window_ttcf_time - r.pre_window_ttcf_time,
