@@ -123,7 +123,7 @@ plt.imshow(
     cmap=cmap,
     origin='lower',
 )
-plt.savefig(plots_folder / f'fft_img_stk0{extension}')
+plt.savefig(plots_folder / f'fft_img_stk0{extension}', **kwargs)
 show()
 
 fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
@@ -133,7 +133,7 @@ ax.scatter(*(collapsed_rgb[:, i] for i in range(3)))
 ax.set_xlabel('r')
 ax.set_ylabel('g')
 ax.set_zlabel('b')
-plt.savefig(plots_folder / f'rgb_scatter{extension}')
+plt.savefig(plots_folder / f'rgb_scatter{extension}', **kwargs)
 show()
 plt.close()
 
@@ -143,7 +143,7 @@ plt.imshow(
     cmap=cmap, 
     origin='lower',
 )
-plt.savefig(plots_folder / f'rms_contrast{extension}')
+plt.savefig(plots_folder / f'rms_contrast{extension}', **kwargs)
 show()
 plt.close()
 
@@ -156,7 +156,7 @@ plt.imshow(
     cmap=cmap,
     origin='lower',
 )
-plt.savefig(plots_folder / f'michelson_contrast{extension}')
+plt.savefig(plots_folder / f'michelson_contrast{extension}', **kwargs)
 show()
 plt.close()
 

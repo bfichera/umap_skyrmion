@@ -61,13 +61,13 @@ with Recorder(
     desired_y = int(size_y * size_fraction)
     img_stk = img_stk[:desired_frames, :desired_x, :desired_y]
     splicing_time = time.time()
-    recorder.register(img_stk.shape, 'img_stk_shape')
+    recorder.register(img_stk.shape, name='img_stk_shape')
     if quick_test:
         logger.warning('Using wrong size data!')
         mapper_in = img_stk[:20, ::32, ::32]
     else:
         mapper_in = img_stk[:, :, :]
-    recorder.register(mapper_in.shape, 'mapper_in_shape')
+    recorder.register(mapper_in.shape, name='mapper_in_shape')
     recorder.register(splicing_time)
     window_shape = (mapper_in.shape[0], window_length, window_length)
     recorder.register(window_shape)
@@ -105,7 +105,7 @@ with Recorder(
     post_window_ttcf_time = time.time()
     recorder.register(pre_window_ttcf_time)
     recorder.register(post_window_ttcf_time)
-    recorder.register(window_ttcf.shape, 'window_ttcf_shape')
+    recorder.register(window_ttcf.shape, name='window_ttcf_shape')
 
     mapper = UMAP(low_res_feature_map, upscaler)
     pre_rgb_time = time.time()
