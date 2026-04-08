@@ -1,0 +1,57 @@
+WINDOW_SIZES = [35, 65, 95, 125]
+WINDOW_STEP_SIZES = [10]
+SIZE_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0]
+FRAMES_FRACTIONS = [0.2, 0.4, 0.6, 0.8, 1.0]
+TRIALS = [0, 1, 2]
+
+
+
+wildcard_constraints:
+    window_size=r"\d+",
+    window_step_size=r"\d+",
+    size_fractions=r"\d+",
+    frames_fractions=r"\d+",
+    trial=r"\d+"
+
+
+rule all:
+    input:
+        expand(
+            "results/trial_{trial}/size_fraction_{size_fraction}/frames_fraction_{frames_fraction}/window_size_{window_size}/window_step_size_{window_step_size}/results.pkl",
+            window_size=WINDOW_SIZES,
+            window_step_size=WINDOW_STEP_SIZES,
+            size_fraction=SIZE_FRACTIONS,
+            frames_fraction=FRAMES_FRACTIONS,
+            trial=TRIALS
+        ),
+        script="workflow/scripts/make_pandas.py"
+    output:
+        "results/summary.csv"
+    threads: 1
+    resources:
+        nodes=1,
+        mem_str="16gb",
+        runtime=600
+    shell:
+        "workflow/envs/venv/bin/python {input.script} --results-path results --output-path {output}"
+
+
+rule single:
+    input:
+        script="workflow/scripts/replicate_umap.py",
+        data="../data"
+    output:
+        protected("results/trial_{trial}/size_fraction_{size_fraction}/frames_fraction_{frames_fraction}/window_size_{window_size}/window_step_size_{window_step_size}/results.pkl")
+    threads: 16
+    resources:
+        nodes=1,
+        mem_str="256gb",
+        runtime=28800
+    shell:
+        "module load cuda; module load gcc; \
+         NUMBA_NUM_THREADS={threads} \
+         MKL_NUM_THREADS={threads} \
+         OMP_NUM_THREADS={threads} \
+         NUMBA_THREADING_LAYER=workqueue \
+         UMAP_SKYRMION_DATA={input.data} \
+         workflow/envs/venv/bin/python {input.script} --window-length {wildcards.window_size} --window-stepsize {wildcards.window_step_size} --recorder-path {output} --size-fraction {wildcards.size_fraction} --frames-fraction {wildcards.frames_fraction} --trial {wildcards.trial}"
