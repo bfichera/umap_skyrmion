@@ -2,7 +2,6 @@ from pathlib import Path
 import pickle
 import argparse
 
-import numpy as np
 import pandas as pd
 
 
@@ -11,21 +10,12 @@ import pandas as pd
 # computing the ttcfs
 # doing the efficientnet+umap part
 
-data_cmap = 'Greys'
-cmap = 'viridis'
-ttcf_cmap = 'magma'
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--results-path', type=lambda s: Path(s))
 parser.add_argument('--output-path', type=lambda s: Path(s))
 _cfg = parser.parse_args()
 output_path = _cfg.output_path
 results_path = _cfg.results_path
-
-kwargs = {
-    'bbox_inches': 'tight',
-    'pad_inches': 0,
-}
 
 rows = []
 for trial_d in results_path.glob('trial_*'):
