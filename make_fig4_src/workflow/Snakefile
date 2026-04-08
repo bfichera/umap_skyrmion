@@ -14,6 +14,21 @@ wildcard_constraints:
     trial=r"\d+"
 
 
+rule plots:
+    input:
+        csv="results/summary.csv",
+        script="workflow/scripts/make_plots.py"
+    output:
+        directory("plots")
+    threads: 1
+    resources:
+        nodes=1,
+        mem_str="16gb",
+        runtime=600
+    shell:
+        "mkdir -p {output} && workflow/envs/venv/bin/python {input.script} --csv-path {input.csv} --output {output}"
+
+
 rule all:
     input:
         expand(
