@@ -128,6 +128,9 @@ plt.imshow(
 )
 plt.savefig(plots_folder / f'fft_img_stk0{extension}', **kwargs)
 show()
+fft_linecut = fft_im[fft_im.shape[0] // 2, fft_im.shape[1] // 2:]
+with open(plots_folder / 'fft_linecut.csv', 'w') as fh:
+    np.savetxt(fh, fft_linecut, delimiter=',', fmt='%f')
 
 fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 u0, u1, u2, u3 = r.mapper_low_res_rgb.shape
