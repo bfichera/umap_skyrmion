@@ -118,8 +118,11 @@ cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / 'sum_img_stk_0_colorbar.pdf', **kwargs)
 plt.close()
+fft_im = np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :])))
 plt.imshow(
-    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, :, :]))),
+    fft_im,
+    vmin=0.0,
+    vmax=np.nanpercentile(fft_im, 99),
     cmap=cmap,
     origin='lower',
 )
