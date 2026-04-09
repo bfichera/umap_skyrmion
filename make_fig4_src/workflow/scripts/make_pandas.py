@@ -48,9 +48,11 @@ for trial_d in results_path.glob('trial_*'):
                         'process_windows_time': r.post_process_windows_time - r.pre_process_windows_time,
                         'create_model_time': r.post_create_model_time - r.pre_create_model_time,
                         'create_windows_time': r.post_create_windows_time - r.pre_create_windows_time,
-                        'img_stk_size': r.img_stk_size,
-                        'low_res_feature_map_size': r.low_res_feature_map_size,
-                        'window_ttcf_size': r.window_ttcf_size,
+                        'img_stk_nbytes': r.img_stk_nbytes,
+                        'low_res_feature_map_nbytes': r.low_res_feature_map_nbytes,
+                        'window_ttcf_nbytes': r.window_ttcf_nbytes,
+                        'total_except_img_stk_size': r.low_res_feature_map_nbytes + r.window_ttcf_nbytes,
+                        'total_size': r.low_res_feature_map_nbytes + r.window_ttcf_nbytes + r.img_stk_nbytes,
                     }
                     rows.append(row)
 d = pd.DataFrame(rows)
