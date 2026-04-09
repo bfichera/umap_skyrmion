@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--results-path', type=lambda s: Path(s))
 parser.add_argument('--output-path', type=lambda s: Path(s))
 _cfg = parser.parse_args()
-\utput_path = _cfg.output_path
+output_path = _cfg.output_path
 results_path = _cfg.results_path
 
 rows = []
