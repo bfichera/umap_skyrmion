@@ -25,7 +25,7 @@ with open(csv_path, 'r') as fh:
     d = pd.read_csv(fh)
 
 label_cols = ['size_fraction', 'frames_fraction', 'window_size', 'window_step_size', 'num_frames', 'size_x', 'size_y', 'num_windows_x', 'num_windows_y']
-measure_cols = [c for c in d.columns if c.endswith('_time')]
+measure_cols = [c for c in d.columns if c.endswith('_time') or c.endswith('_size')]
 
 
 # Times vs num_frames for a certain window size and spatial size
