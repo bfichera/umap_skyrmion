@@ -6,6 +6,22 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+def radial_integral(img, center=None):
+    y, x = np.indices(img.shape)
+    
+    if center is None:
+        center = (img.shape[0] // 2, img.shape[1] // 2)
+    
+    r = np.sqrt((x - center[1])**2 + (y - center[0])**2)
+    r = r.astype(int)  # bin radii
+    
+    # sum per radius
+    radial_sum = np.bincount(r.ravel(), weights=img.ravel())
+    
+    return radial_sum
+
+
 data_cmap = 'Greys'
 cmap = 'viridis'
 ttcf_cmap = 'magma'
@@ -131,6 +147,10 @@ show()
 fft_linecut = fft_im[fft_im.shape[0] // 2, fft_im.shape[1] // 2:]
 with open(plots_folder / 'fft_linecut.csv', 'w') as fh:
     np.savetxt(fh, fft_linecut, delimiter=',', fmt='%f')
+fft_radial = radial_integral(fft_im)
+with open(plots_folder / 'fft_radial.csv', 'w') as fh:
+    np.savetxt(fh, fft_radial, delimiter=',', fmt='%f')
+
 
 fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 u0, u1, u2, u3 = r.mapper_low_res_rgb.shape
