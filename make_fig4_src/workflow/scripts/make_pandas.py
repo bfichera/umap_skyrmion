@@ -48,11 +48,11 @@ for trial_d in results_path.glob('trial_*'):
                         'process_windows_time': r.post_process_windows_time - r.pre_process_windows_time,
                         'create_model_time': r.post_create_model_time - r.pre_create_model_time,
                         'create_windows_time': r.post_create_windows_time - r.pre_create_windows_time,
-                        'img_stk_nbytes': r.img_stk_nbytes,
-                        'low_res_feature_map_nbytes': r.low_res_feature_map_nbytes,
-                        'window_ttcf_nbytes': r.window_ttcf_nbytes,
-                        'total_except_img_stk_size': r.low_res_feature_map_nbytes + r.window_ttcf_nbytes,
-                        'total_size': r.low_res_feature_map_nbytes + r.window_ttcf_nbytes + r.img_stk_nbytes,
+                        'img_stk_nbytes': r.img_stk_nbytes / 1e9,
+                        'low_res_feature_map_nbytes': r.low_res_feature_map_nbytes / 1e9,
+                        'window_ttcf_nbytes': r.window_ttcf_nbytes / 1e9,
+                        'total_except_img_stk_size': (r.low_res_feature_map_nbytes + r.window_ttcf_nbytes) / 1e9,
+                        'total_size': (r.low_res_feature_map_nbytes + r.window_ttcf_nbytes + r.img_stk_nbytes) / 1e9,
                     }
                     rows.append(row)
 d = pd.DataFrame(rows)
