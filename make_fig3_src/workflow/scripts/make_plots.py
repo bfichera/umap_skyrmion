@@ -147,7 +147,7 @@ show()
 fft_linecut = fft_im[fft_im.shape[0] // 2, fft_im.shape[1] // 2:]
 with open(plots_folder / 'fft_linecut.csv', 'w') as fh:
     np.savetxt(fh, fft_linecut, delimiter=',', fmt='%f')
-fft_radial = radial_integral(fft_im)
+fft_radial = radial_integral(fft_im) / 1e6
 with open(plots_folder / 'fft_radial.csv', 'w') as fh:
     np.savetxt(fh, fft_radial, delimiter=',', fmt='%f')
 
