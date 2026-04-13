@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+
+from pathlib import Path
+paths = {}
+for path in Path.cwd().glob('window_length_*'):
+    size = int(path.stem.split('_')[-1])
+    paths[(path / 'window_stepsize_10' / 'low_res_rgb.pdf').absolute()] = size
+
+paths = sorted(paths.keys(), key=lambda p: paths[p])
+
+command = 'pdfunite '+' '.join([p.as_posix() for p in paths]) + ' summary.pdf'
+print(command)
