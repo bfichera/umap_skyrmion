@@ -81,9 +81,13 @@ for frame in frames_of_interest:
 params['img_stk_0_vmin'] = cdw_vmin_0
 params['img_stk_0_vmax'] = cdw_vmax_0
 for frame in frames_of_interest:
-    mappable_0 = plt.imshow(r.img_stk[frame, :, :], cmap=data_cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0, origin='lower')
-    plt.axis('off')
-    plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
+    h, w = r.img_stk.shape[1:]
+    dpi=100
+    fig = plt.figure(figsize=(w/dpi, h/dpi), dpi=dpi)
+    ax = fig.add_axes([0, 0, 1, 1])
+    mappable_0 = ax.imshow(r.img_stk[frame, :, :], cmap=data_cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0, origin='lower', interpolation='nearest', aspect='auto')
+    ax.set_axis_off()
+    fig.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', dpi=dpi, **kwargs)
     show()
 
 fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
