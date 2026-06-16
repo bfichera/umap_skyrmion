@@ -1,4 +1,4 @@
-WINDOW_SIZES = [45]
+WINDOW_SIZES = [65]
 WINDOW_STEPSIZES = [10]
 TTCFS_I = [0]
 TTCFS_J = [0]
@@ -26,7 +26,7 @@ rule make_plots:
     threads: 1
     resources:
         nodes=1,
-        mem_str=16,
+        mem_str="16gb",
         runtime=600,
     shell:
         "mkdir -p {output} && workflow/envs/venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf --ttcfs_i {TTCFS_I} --ttcfs_j {TTCFS_J}"
