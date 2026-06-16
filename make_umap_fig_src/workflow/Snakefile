@@ -1,28 +1,28 @@
-WINDOW_SIZES = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 120, 140]
-WINDOW_STEP_SIZES = [10]
+WINDOW_SIZES = [45]
+WINDOW_STEPSIZES = [10]
 TTCFS_I = [0]
 TTCFS_J = [0]
+N_NEIGHBORS = [15]
+MIN_DIST = [0.1]
 
 
-
-wildcard_constraints:
-    window_size=r"\d+",
-    window_step_size=r"\d+"
 
 rule all:
     input:
         expand(
-            "plots/window_length_{window_size}/window_stepsize_{window_step_size}",
+            "plots/n_neighbors_{n_neighbors}/min_dist_{min_dist}/window_size_{window_size}/window_stepsize_{window_stepsize}",
+            n_neighbors=N_NEIGHBORS,
+            min_dist=MIN_DIST,
             window_size=WINDOW_SIZES,
-            window_step_size=WINDOW_STEP_SIZES,
+            window_stepsize=WINDOW_STEPSIZES
         )
 
 rule make_plots:
     input:
         script="workflow/scripts/make_plots.py",
-        results="results/{window_size}/{window_step_size}/results.pkl"
+        results="results/n_neighbors_{n_neighbors}/min_dist_{min_dist}/window_size_{window_size}/window_stepsize_{window_stepsize}/results.pkl"
     output:
-        directory("plots/window_length_{window_size}/window_stepsize_{window_step_size}")
+        directory("plots/n_neighbors_{n_neighbors}/min_dist_{min_dist}/window_size_{window_size}/window_stepsize_{window_stepsize}")
     threads: 1
     resources:
         nodes=1,
@@ -36,7 +36,7 @@ rule single:
         script="workflow/scripts/replicate_umap.py",
         data="../data"
     output:
-        protected("results/{window_size}/{window_step_size}/results.pkl")
+        protected("results/n_neighbors_{n_neighbors}/min_dist_{min_dist}/window_size_{window_size}/window_stepsize_{window_stepsize}/results.pkl")
     threads: 16
     resources:
         nodes=1,
@@ -49,4 +49,4 @@ rule single:
          OMP_NUM_THREADS={threads} \
          NUMBA_THREADING_LAYER=workqueue \
          UMAP_SKYRMION_DATA={input.data} \
-         workflow/envs/venv/bin/python {input.script} --window-length {wildcards.window_size} --window-stepsize {wildcards.window_step_size} --recorder-path {output}"
+         workflow/envs/venv/bin/python {input.script} --window-length {wildcards.window_size} --window-stepsize {wildcards.window_stepsize} --recorder-path {output} --n_neighbors {wildcards.n_neighbors} --min_dist {wildcards.min_dist}"
