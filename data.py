@@ -8,5 +8,5 @@ with open('data/Skyrmion_Time_Series_300G_15sframe.tif', 'rb') as fh:
     ims = imread(fh)
 
 for i in range(ims.shape[0]):
-    plt.imshow(ims[i, :, :])
+    plt.imshow(ims[i, :, :], origin='lower')
     plt.show()
