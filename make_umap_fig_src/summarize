@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+from pathlib import Path
+import os
+
+# n_neighbors dependence
+paths = []
+for path in Path('plots').glob('n_neighbors_*/min_dist_0.1/window_size_65/'
+                               'window_stepsize_10/low_res_rgb.pdf'):
+    paths.append(path)
+command = 'pdfunite ' + ' '.join(
+    [p.as_posix() for p in paths]
+) + ' summary_vary_n_neighbors.pdf'
+os.system(command)
+
+# min_dist dependence
+paths = []
+for path in Path('plots').glob('n_neighbors_15/min_dist_*/window_size_65/'
+                               'window_stepsize_10/low_res_rgb.pdf'):
+    paths.append(path)
+command = 'pdfunite ' + ' '.join(
+    [p.as_posix() for p in paths]
+) + ' summary_vary_min_dist.pdf'
+os.system(command)
