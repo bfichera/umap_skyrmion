@@ -20,6 +20,21 @@ wildcard_constraints:
     trial=r"\d+"
 
 
+rule fit:
+    input:
+        dir="plots",
+        script="workflow/scripts/fit.py"
+    output:
+        directory("fits")
+    threads: 1
+    resources:
+        nodes=1,
+        mem_str="1gb",
+        runtime=600
+    shell:
+        "mkdir -p {output} && workflow/envs/venv/bin/python {input.script} --input_dir {input.dir} --output {output}"
+
+
 rule plots:
     input:
         csv="results/summary.csv",
@@ -35,7 +50,7 @@ rule plots:
         "mkdir -p {output} && workflow/envs/venv/bin/python {input.script} --csv-path {input.csv} --output {output}"
 
 
-rule all:
+rule all_results:
     input:
         expand(
             "results/trial_{trial}/size_fraction_{size_fraction}/frames_fraction_{frames_fraction}/window_size_{window_size}/window_step_size_{window_step_size}/results.pkl",
